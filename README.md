@@ -2,7 +2,7 @@
 Mountain dataset for Open Computing course
 
  ## Metadata
- - **License**: Creative Commons CC-BY-SA 4.0
+ - **License**: Creative Commons CC0 1.0 License
  - **Author**: Nela Štubelj
  - **Version**: 1.0
  - **Language**: English
