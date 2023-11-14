@@ -1,0 +1,100 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column; /* Promijenjeno na column kako bi elementi bili jedan ispod drugog */
+  align-items: center;
+  min-height: 100vh;
+}
+  
+.container {
+  margin: 80px;
+  padding: 20px;
+  border: 2px solid #b3ccff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 70%; /* Promijenite širinu prema potrebi */
+}
+
+  div {
+    margin: 20px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input,
+  select,
+  button {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  thead th {
+    background-color: #d0e1f9; /* Light blue color */
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+  }
+  
+  input, select {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  select {
+    width: 150px; /* Adjust the width as needed */
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #2962b1;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #1c3a7a;
+  }
+  .link-button {
+    margin-top: 20px; /* Dodani razmak ispod containera */
+    padding: 10px 15px;
+    background-color: #8eb0f8; /* Tamnija nijansa boje containera */
+    border: none;
+    color: #fff;
+    text-decoration: none; /* Uklanja podcrtavanje teksta u linku */
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+  }
+
+  .link-button:hover {
+    background-color: #4982b3; /* Još tamnija nijansa prilikom hovera */
+  }
+
+
