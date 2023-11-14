@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mountain Data</title>
+    <meta name="description" content="mountains data" />
+    <meta name="author" content="Nela Štubelj" />
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Dataset about mountains</h1>
+
+      <button
+        onclick="downloadData('../../server/mountains-data/mountains.csv')"
+      >
+        Download data in CSV format
+      </button>
+      <button
+        onclick="downloadData('../../server/mountains-data/mountains.json')"
+      >
+        Download data in JSON format
+      </button>
+    </div>
+
+    <div>
+      <a href="./datatable.html" class="link-button">Go to datatable</a>
+    </div>
+    <script>
+      function downloadData(url) {
+        window.location.href = url;
+      }
+    </script>
+  </body>
+</html>
