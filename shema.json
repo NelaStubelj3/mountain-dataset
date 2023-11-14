@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Generated schema for Root",
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "mountain_id": {
+          "type": "number"
+        },
+        "mountain_name": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string"
+        },
+        "mountain_description": {
+          "type": "string"
+        },
+        "highest_peak": {
+          "type": "string"
+        },
+        "trail_id": {
+          "type": "number"
+        },
+        "trail_name": {
+          "type": "string"
+        },
+        "trail_description": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "length": {
+          "type": "number"
+        },
+        "elevation_gain": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "mountain_id",
+        "mountain_name",
+        "country",
+        "height",
+        "mountain_description",
+        "highest_peak",
+        "trail_id",
+        "trail_name",
+        "trail_description",
+        "difficulty",
+        "length",
+        "elevation_gain"
+      ]
+    }
+  }
