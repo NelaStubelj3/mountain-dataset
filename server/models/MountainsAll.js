@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       difficulty: DataTypes.STRING,
       length: DataTypes.FLOAT,
       elevation_gain: DataTypes.INTEGER,
-      mountain_id: DataTypes.INTEGER,
     },
     {
       timestamps: false,

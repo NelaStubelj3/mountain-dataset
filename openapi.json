@@ -1,0 +1,267 @@
+
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Mountain Trails API",
+      "version": "1.0.0",
+      "description": "API for managing mountain trails",
+      "contact": {
+        "name": "Nela Štubelj",
+        "email": "stubeljnela@gmail.com"
+      },
+      "license": {
+        "name": "Creative Commons CC0 1.0 License"
+      }
+    },
+    "paths": {
+      "/mountain-trails": {
+        "get": {
+          "summary": "Get all mountain trails",
+          "description": "Returns a single collection resource",
+          "produces": [
+               "application/json"
+            ],
+          "responses": {
+            "200": {
+              "description": "Fetch successful",
+              "schema": {
+                "$ref": "http://localhost:5500/shema.json"
+              }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new mountain trail",
+          "responses": {
+            "201": {
+              "description": "Created successfuly"
+              },
+            "500":{
+              "description": "Internal Server Error"
+            }
+            }
+          }
+        }
+      },
+      "/mountain-trails/{trail_id}": {
+        "get": {
+          "summary": "Get a mountain trail by ID",
+          "parameters": [
+            {
+              "name": "trail_id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the mountain trail",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch successful"
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "Not Found",
+                    "message": "Mountain trail not found",
+                    "response": null
+                  }
+                }
+              }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a mountain trail by ID",
+          "parameters": [
+            {
+                "name": "trail_id",
+                "in": "path",
+                "required": true,
+                "description": "ID of the mountain trail",
+                "schema": {
+                  "type": "integer"
+                }
+              }          
+            ],
+          "responses": {
+            "200": {
+                "description": "Fetch successful"
+              },
+              "404": {
+                "description": "Not Found",
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "status": "Not Found",
+                      "message": "Mountain trail not found",
+                      "response": null
+                    }
+                  }
+                }
+              },
+              "500":{
+                  "description": "Internal Server Error"
+              }          
+            }
+        },
+        "delete": {
+          "summary": "Delete a mountain trail by ID",
+          "parameters": [
+            {
+                "name": "trail_id",
+                "in": "path",
+                "required": true,
+                "description": "ID of the mountain trail",
+                "schema": {
+                  "type": "integer"
+                }
+              } 
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete successful",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "OK",
+                    "message": "Mountain trail deleted",
+                    "response": 1
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "Not Found",
+                    "message": "Mountain trail not found",
+                    "response": null
+                  }
+                }
+              }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/mountain-trails/difficulty/{difficulty}": {
+        "get": {
+          "summary": "Get mountain trails by difficulty",
+          "description": "Returns a list of mountain trails based on the specified difficulty level.",
+          "parameters": [
+            {
+              "name": "difficulty",
+              "in": "path",
+              "description": "Difficulty level of the mountain trails (e.g., easy, moderate, hard)",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "http://localhost:5500/shema.json"
+                }
+                }
+              }
+            },
+            "404": {
+              "description": "No mountain trails found for the specified difficulty level"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/mountain-trails/country/{country}": {
+        "get": {
+          "summary": "Get mountain trails by country",
+          "description": "Returns a list of mountain trails based on the specified country.",
+          "parameters": [
+            {
+              "name": "country",
+              "in": "path",
+              "description": "Country of the mountain trails",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "http://localhost:5500/shema.json"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No mountain trails found in the specified country"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/mountain-trails/mountain_name/{mountain_name}": {
+        "get": {
+            "summary": "Get mountain trails by mountain name",
+            "description": "Returns a list of mountain trails based on the specified mountain name.",
+            "parameters": [
+            {
+                "name": "mountain_name",
+                "in": "path",
+                "description": "Name of the mountain",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+            ],
+            "responses": {
+              "200": {
+                "description": "Fetch successful",
+                "content": {
+                "application/json": {
+                  "schema": {
+                        "$ref": "http://localhost:5500/shema.json"
+                    }
+                }
+                }
+                },
+              "404": {
+                  "description": "No mountain trails found with the specified mountain name"
+                },
+              "500": {
+                  "description": "Internal Server Error"
+              }
+            }
+        }
+    }
+}

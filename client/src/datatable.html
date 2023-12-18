@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="./App.css" />
   </head>
   <body>
-    <script type="module" src="../scripts/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <div class="App">
@@ -31,11 +30,18 @@
         <table id="mountainTable">
           <thead>
             <tr>
+              <th>Mountain id</th>
               <th>Mountain name</th>
               <th>Country</th>
-              <th>Height</th>
+              <th>Height (m)</th>
               <th>Mountain description</th>
               <th>Highest peak</th>
+              <th>Trail id</th>
+              <th>Trail name</th>
+              <th>Trail description</th>
+              <th>Difficulty</th>
+              <th>Length (km)</th>
+              <th>Elevation gain (m)</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -47,8 +53,10 @@
         <button type="button" onclick="downloadData('json')">
           Download JSON
         </button>
+        <a href="./index.html" class="link-button">Go to homepage</a>
       </div>
     </div>
+
     <script>
       {
         let filterText = document.getElementById("filterText");
@@ -69,8 +77,10 @@
               return response.json();
             })
             .then((data) => {
-              listOfMountains = data;
-              displayData(listOfMountains);
+              if (data.status == "OK") {
+                listOfMountains = data.response;
+                displayData(listOfMountains);
+              }
             })
             .catch((error) => {
               console.error("Error fetching data:", error);
@@ -82,7 +92,7 @@
           let filterAttributeValue = filterAttribute.value.toLowerCase();
 
           if (!filterTextValue && filterAttributeValue === "all") {
-            filteredMountains = listOfMountains;
+            displayData(listOfMountains);
             return;
           }
 
@@ -116,11 +126,19 @@
           mountains.forEach(function (mountain) {
             const row = document.createElement("tr");
             row.innerHTML = `
+          <td>${mountain.mountain_id}</td>
           <td>${mountain.mountain_name}</td>
           <td>${mountain.country}</td>
           <td>${mountain.height}</td>
           <td>${mountain.mountain_description}</td>
           <td>${mountain.highest_peak}</td>
+          <td>${mountain.trail_id}</td>
+          <td>${mountain.trail_name}</td>
+          <td>${mountain.trail_description}</td>
+          <td>${mountain.difficulty}</td>
+          <td>${mountain.length}</td>
+          <td>${mountain.elevation_gain}</td>
+
         `;
             mountainTableBody.appendChild(row);
           });

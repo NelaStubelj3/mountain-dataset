@@ -15,6 +15,15 @@ app.use(express.json());
 
 const sequelize = new Sequelize(sequelizeConfig.development);
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection to db has been established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
+
 db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
@@ -30,7 +39,7 @@ const mountainsallRouter = require("./routes/MountainsAll");
 app.use("/mountainsall", mountainsallRouter);
 
 sequelize
-  .sync({ force: true })
+  .sync("forse:true")
   .then(() => {
     console.log("Database synced successfully");
   })

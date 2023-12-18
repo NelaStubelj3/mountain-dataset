@@ -4,7 +4,7 @@ body {
   padding: 0;
   background-color: #f4f4f4;
   display: flex;
-  flex-direction: column; /* Promijenjeno na column kako bi elementi bili jedan ispod drugog */
+  flex-direction: column; 
   align-items: center;
   min-height: 100vh;
 }
@@ -15,7 +15,7 @@ body {
   border: 2px solid #b3ccff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 70%; /* Promijenite širinu prema potrebi */
+  width: 70%; 
 }
 
   div {
@@ -45,7 +45,7 @@ body {
   }
   
   thead th {
-    background-color: #d0e1f9; /* Light blue color */
+    background-color: #d0e1f9; 
     font-weight: bold;
     text-align: left;
   }
@@ -63,7 +63,7 @@ body {
   }
   
   select {
-    width: 150px; /* Adjust the width as needed */
+    width: 150px; 
   }
   button {
     padding: 10px 20px;
@@ -80,12 +80,12 @@ body {
     background-color: #1c3a7a;
   }
   .link-button {
-    margin-top: 20px; /* Dodani razmak ispod containera */
+    margin-top: 20px; 
     padding: 10px 15px;
-    background-color: #8eb0f8; /* Tamnija nijansa boje containera */
+    background-color: #8eb0f8; 
     border: none;
     color: #fff;
-    text-decoration: none; /* Uklanja podcrtavanje teksta u linku */
+    text-decoration: none; 
     display: inline-block;
     cursor: pointer;
     font-size: 14px;
@@ -94,7 +94,7 @@ body {
   }
 
   .link-button:hover {
-    background-color: #4982b3; /* Još tamnija nijansa prilikom hovera */
+    background-color: #4982b3; 
   }
 
 
