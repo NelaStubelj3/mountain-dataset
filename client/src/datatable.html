@@ -13,7 +13,7 @@
 
     <div class="App">
       <div>
-        <form onSubmit="filterForm">
+        <form onsubmit="event.preventDefault(); filterData();">
           <label htmlFor="filterText">Enter search text:</label>
           <input type="text" id="filterText" name="filterText" />
 
@@ -22,6 +22,8 @@
             <option value="all">All fields(Wildcard)</option>
             <option value="mountain_name">Mountain name</option>
             <option value="country">Country</option>
+            <option value="trail_id">Trail ID</option>
+            <option value="difficulty">Difficulty</option>
           </select>
 
           <button type="button" onclick="filterData()">Search</button>
@@ -30,18 +32,18 @@
         <table id="mountainTable">
           <thead>
             <tr>
-              <th>Mountain id</th>
-              <th>Mountain name</th>
+              <th>Mountain ID</th>
+              <th>Mountain Name</th>
               <th>Country</th>
               <th>Height (m)</th>
-              <th>Mountain description</th>
-              <th>Highest peak</th>
-              <th>Trail id</th>
-              <th>Trail name</th>
-              <th>Trail description</th>
+              <th>Mountain Description</th>
+              <th>Highest Peak</th>
+              <th>Trail ID</th>
+              <th>Trail Name</th>
+              <th>Trail Description</th>
               <th>Difficulty</th>
               <th>Length (km)</th>
-              <th>Elevation gain (m)</th>
+              <th>Elevation Gain (m)</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -57,39 +59,332 @@
       </div>
     </div>
 
+    <div>
+      <button id="toggleFormButton" onclick="toggleForm()">
+        Create Mountain Trail
+      </button>
+
+      <form id="createMountainForm" style="display: none">
+        <label for="mountainId">Mountain ID:</label>
+        <input type="number" id="mountainId" name="mountainId" required />
+
+        <label for="mountainName">Mountain Name:</label>
+        <input type="text" id="mountainName" name="mountainName" required />
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required />
+
+        <label for="height">Height (m):</label>
+        <input type="number" id="height" name="height" required />
+
+        <label for="mountainDescription">Mountain Description:</label>
+        <input
+          type="text"
+          id="mountainDescription"
+          name="mountainDescription"
+          required
+        />
+
+        <label for="highestPeak">Highest Peak:</label>
+        <input type="text" id="highestPeak" name="highestPeak" required />
+
+        <label for="trailId">Trail ID:</label>
+        <input type="number" id="trailId" name="trailId" required />
+
+        <label for="trailName">Trail name:</label>
+        <input type="text" id="trailName" name="trailName" required />
+
+        <label for="trailDescription">Trail Description:</label>
+        <input
+          type="text"
+          id="trailDescription"
+          name="trailDescription"
+          required
+        />
+
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty" name="difficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Moderate">Moderate</option>
+          <option value="Hard">Hard</option>
+        </select>
+
+        <label for="length">Length:</label>
+        <input type="number" id="length" name="length" required />
+
+        <label for="elevationGain">Elevation Gain:</label>
+        <input type="number" id="elevationGain" name="elevationGain" required />
+
+        <button type="button" onclick="testCreate()">Create Mountain</button>
+      </form>
+
+      <form onsubmit="event.preventDefault(); testReadWithFilter();">
+        <label for="searchRead">Search:</label>
+
+        <input type="text" id="testRead" name="testRead" />
+
+        <label for="testAttribute">Choose a search attribute:</label>
+        <select id="testAttribute">
+          <option value="mountain_name">Mountain name</option>
+          <option value="country">Country</option>
+          <option value="trail_id">Trail ID</option>
+          <option value="difficulty">Difficulty</option>
+        </select>
+
+        <button type="button" onclick="testReadWithFilter()">Test Read</button>
+      </form>
+      <button id="toggleUpdateFormButton" onclick="toggleUpdateForm()">
+        Update Mountain Trail
+      </button>
+
+      <form id="updateMountainForm" style="display: none">
+        <label for="trailId">Trail ID for update:</label>
+        <input type="number" id="updateTrailId" name="updateTrailId" required />
+
+        <label for="mountainId">Mountain ID:</label>
+        <input
+          type="number"
+          id="updateMountainId"
+          name="updateMountainId"
+          required
+        />
+
+        <label for="mountainName">Mountain Name:</label>
+        <input
+          type="text"
+          id="updateMountainName"
+          name="updateMountainName"
+          required
+        />
+
+        <label for="country">Country:</label>
+        <input type="text" id="updateCountry" name="updateCountry" required />
+
+        <label for="height">Height (m):</label>
+        <input type="number" id="updateHeight" name="updateHeight" required />
+
+        <label for="mountainDescription">Mountain Description:</label>
+        <input
+          type="text"
+          id="updateMountainDescription"
+          name="updateMountainDescription"
+          required
+        />
+
+        <label for="highestPeak">Highest Peak:</label>
+        <input
+          type="text"
+          id="updateHighestPeak"
+          name="updateHighestPeak"
+          required
+        />
+
+        <label for="trailName">Trail name:</label>
+        <input
+          type="text"
+          id="updateTrailName"
+          name="updateTrailName"
+          required
+        />
+
+        <label for="trailDescription">Trail Description:</label>
+        <input
+          type="text"
+          id="updateTrailDescription"
+          name="updateTrailDescription"
+          required
+        />
+
+        <label for="difficulty">Difficulty:</label>
+        <select id="updateDifficulty" name="updateDifficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Moderate">Moderate</option>
+          <option value="Hard">Hard</option>
+        </select>
+
+        <label for="length">Length:</label>
+        <input type="number" id="updateLength" name="updateLength" required />
+
+        <label for="elevationGain">Elevation Gain:</label>
+        <input
+          type="number"
+          id="updateElevationGain"
+          name="updateElevationGain"
+          required
+        />
+
+        <button type="button" onclick="testUpdate()">Update Mountain</button>
+      </form>
+      <form onsubmit="event.preventDefault(); testDelete();">
+        <label for="deleteTrailId">Trail ID for delete:</label>
+        <input type="number" id="trailIdToDelete" name="trailIdToDelete" />
+
+        <button type="button" onclick="testDelete()">Test Delete</button>
+      </form>
+    </div>
     <script>
       {
-        let filterText = document.getElementById("filterText");
-        let filterAttribute = document.getElementById("filterAttribute");
-        let mountainTableBody = document.querySelector("#mountainTable tbody");
+        function toggleForm() {
+          const form = document.getElementById("createMountainForm");
+          form.style.display = form.style.display === "none" ? "block" : "none";
+        }
+        function toggleUpdateForm() {
+          const form = document.getElementById("updateMountainForm");
+          form.style.display = form.style.display === "none" ? "block" : "none";
+        }
+
+        function testCreate() {
+          const newMountain = {
+            mountain_id: parseInt(document.getElementById("mountainId").value),
+            mountain_name: document.getElementById("mountainName").value,
+            country: document.getElementById("country").value,
+            height: parseFloat(document.getElementById("height").value),
+            mountain_description: document.getElementById("mountainDescription")
+              .value,
+            highest_peak: document.getElementById("highestPeak").value,
+            trail_id: parseInt(document.getElementById("trailId").value),
+            trail_name: document.getElementById("trailName").value,
+            trail_description:
+              document.getElementById("trailDescription").value,
+            difficulty: document.getElementById("difficulty").value,
+            length: parseFloat(document.getElementById("length").value),
+            elevation_gain: parseFloat(
+              document.getElementById("elevationGain").value
+            ),
+          };
+
+          axios
+            .post("http://localhost:3001/mountainsall", newMountain)
+            .then((response) => {
+              console.log("Create Response:", response.data);
+            })
+            .catch((error) => {
+              console.error("Error creating mountain:", error);
+            });
+        }
+
+        function testRead() {
+          axios
+            .get("http://localhost:3001/mountainsall")
+            .then((response) => {
+              console.log("Read Response:", response.data);
+              displayData(response.data.response);
+            })
+            .catch((error) => {
+              console.error("Error fetching mountain data:", error);
+            });
+        }
+
+        function testUpdate() {
+          const updatedMountain = {
+            mountain_id: parseInt(
+              document.getElementById("updateMountainId").value
+            ),
+            mountain_name: document.getElementById("updateMountainName").value,
+            country: document.getElementById("updateCountry").value,
+            height: parseFloat(document.getElementById("updateHeight").value),
+            mountain_description: document.getElementById(
+              "updateMountainDescription"
+            ).value,
+            highest_peak: document.getElementById("updateHighestPeak").value,
+            trail_id: parseInt(document.getElementById("updateTrailId").value),
+            trail_name: document.getElementById("updateTrailName").value,
+            trail_description: document.getElementById("updateTrailDescription")
+              .value,
+            difficulty: document.getElementById("updateDifficulty").value,
+            length: parseFloat(document.getElementById("updateLength").value),
+            elevation_gain: parseFloat(
+              document.getElementById("updateElevationGain").value
+            ),
+          };
+          trailIdToUpdate = document.getElementById("updateTrailId").value;
+          axios
+            .put(
+              `http://localhost:3001/mountainsall/${trailIdToUpdate}`,
+              updatedMountain
+            )
+            .then((response) => {
+              console.log("Update Response:", response.data);
+            })
+            .catch((error) => {
+              console.error("Error updating mountain:", error);
+            });
+        }
+
+        function testDelete() {
+          const trailIdToDelete =
+            document.getElementById("trailIdToDelete").value;
+          axios
+            .delete(`http://localhost:3001/mountainsall/${trailIdToDelete}`)
+            .then((response) => {
+              console.log("Delete Response:", response.data);
+            })
+            .catch((error) => {
+              console.error("Error deleting mountain:", error);
+            });
+        }
+
+        const filterText = document.getElementById("filterText");
+        const filterAttribute = document.getElementById("filterAttribute");
+        const mountainTableBody = document.querySelector(
+          "#mountainTable tbody"
+        );
 
         let listOfMountains = [];
         let filteredMountains = [];
 
         fetchData();
 
-        function fetchData() {
-          fetch("http://localhost:3001/mountainsall")
+        async function fetchData() {
+          try {
+            const response = await axios.get(
+              "http://localhost:3001/mountainsall"
+            );
+            if (response.data.status === "OK") {
+              listOfMountains = response.data.response;
+              displayData(listOfMountains);
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+
+        function testReadWithFilter() {
+          const testAttribute = document.getElementById("testAttribute").value;
+          const filterText = document.getElementById("testRead").value;
+
+          let difficultyMessage = "";
+
+          if (testAttribute === "difficulty") {
+            const validDifficultyValues = ["easy", "moderate", "hard"];
+            if (!validDifficultyValues.includes(filterText.toLowerCase())) {
+              difficultyMessage =
+                "Please enter a valid difficulty: Easy, Moderate, or Hard.";
+            }
+          }
+
+          const endpoint =
+            testAttribute === "trail_id"
+              ? `http://localhost:3001/mountainsall/${parseInt(filterText, 10)}`
+              : `http://localhost:3001/mountainsall/${testAttribute}/${filterText.toLowerCase()}`;
+
+          axios
+            .get(endpoint)
             .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (data.status == "OK") {
-                listOfMountains = data.response;
-                displayData(listOfMountains);
-              }
+              console.log(`Read ${testAttribute} Response:`, response.data);
+              displayData(response.data.response);
             })
             .catch((error) => {
-              console.error("Error fetching data:", error);
+              console.error(
+                `Error fetching ${testAttribute} mountain data:`,
+                error
+              );
             });
         }
 
         function filterData() {
-          let filterTextValue = filterText.value.toLowerCase();
-          let filterAttributeValue = filterAttribute.value.toLowerCase();
+          const filterTextValue = filterText.value.toLowerCase();
+          const filterAttributeValue = filterAttribute.value.toLowerCase();
 
           if (!filterTextValue && filterAttributeValue === "all") {
             displayData(listOfMountains);
@@ -103,6 +398,8 @@
                 .includes(filterTextValue);
             } else if (filterAttributeValue === "country") {
               return mountain.country.toLowerCase().includes(filterTextValue);
+            } else if (filterAttributeValue === "trail_id") {
+              return mountain.trail_id.toLowerCase().includes(filterTextValue);
             } else {
               for (const key in mountain) {
                 if (Object.prototype.hasOwnProperty.call(mountain, key)) {
