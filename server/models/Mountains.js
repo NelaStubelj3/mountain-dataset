@@ -18,5 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Mountains.associate = (models) => {
+    Mountains.hasMany(models.Trails, { foreignKey: "mountain_id" });
+  };
   return Mountains;
 };

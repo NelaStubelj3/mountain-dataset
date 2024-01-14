@@ -1,0 +1,24 @@
+{
+    "@context": {
+      "@vocab": "https://schema.org/",
+      "mountain": "https://schema.org/Mountain",
+      "mountain_id": "identifier",
+      "mountain_name": "name",
+      "country": "https://schema.org/Country",
+      "height": "https://schema.org/height",
+      "mountain_description": "description",
+      "highestPeak": "additionalType",
+      "trail": {
+        "@id": "trail",
+        "@container": "@list"
+      },
+      "Trail": "https://schema.org/TouristAttraction",
+      "trail_id": "identifier",
+      "trail_name": "name",
+      "trail_description": "description",
+      "difficulty": "additionalType",
+      "length": "additionalType",
+      "elevation_gain": "additionalType"
+    }
+  }
+  

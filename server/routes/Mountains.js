@@ -1,123 +1,109 @@
 const express = require("express");
 const router = express.Router();
 const { Mountains } = require("../models");
+const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
   try {
-    const listOfMountains = await Mountains.findAll();
-    res.json({
-      status: "OK",
-      message: "Fetched all mountains",
-      response: listOfMountains,
-    });
+    const mountains = await Mountains.findAll();
+    res.json(mountains);
   } catch (error) {
-    res.status(500).json({
-      status: "Internal Server Error",
-      message: error.message,
-      response: null,
-    });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.get("/:mountain_id", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const mountain = await Mountains.findById(req.params.mountain_id);
+    const mountain = await Mountains.findByPk(id);
     if (mountain) {
-      res.status(200).json({
-        status: "OK",
-        message: "Fetched mountain",
-        response: mountain,
-      });
+      res.json(mountain);
     } else {
-      res.status(404).json({
-        status: "Not found",
-        message: "Mountain not found",
-        response: null,
-      });
+      res.status(404).json({ error: "Mountain not found" });
     }
-  } catch (err) {
-    res.status(500).json({
-      status: "Error",
-      message: "Internal Server Error",
-      response: null,
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/country/:country", async (req, res) => {
+  const { country } = req.params;
+  try {
+    const mountainsInCountry = await Mountains.findAll({
+      where: { country: country },
     });
+    res.json(mountainsInCountry);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/height/:minHeight/:maxHeight", async (req, res) => {
+  const { minHeight, maxHeight } = req.params;
+  try {
+    console.log(minHeight + " " + maxHeight);
+    const mountainsInRange = await Mountains.findAll({
+      where: {
+        height: {
+          [Op.between]: [minHeight, maxHeight],
+        },
+      },
+    });
+    res.json(mountainsInRange);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 router.post("/", async (req, res) => {
+  const mountain = req.body;
   try {
-    const newMountain = req.body;
-
-    console.log(newMountain.mountain_name);
-    const createdMountain = await Mountains.create(newMountain);
-
-    res.status(201).json({
-      status: "Created",
-      message: "Mountain created successfully",
-      response: createdMountain,
-    });
+    const newMountain = await Mountains.create(mountain);
+    res.status(201).json(newMountain);
   } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Internal Server Error",
-      response: null,
-    });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.put("/:mountain_id", async (req, res) => {
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const newMountain = req.body;
   try {
-    const updatedMountain = await Mountains.findByIdAndUpdate(
-      req.params.mountain_id,
-      req.body,
-      { new: true }
-    );
-    if (updatedMountain) {
-      res.status(200).json({
-        status: "OK",
-        message: "Mountain updated",
-        response: updatedMountain,
-      });
+    console.log(newMountain);
+    const updatedMountain = await Mountains.update(newMountain, {
+      where: { mountain_id: id },
+      returning: true,
+    });
+    if (updatedMountain[0] === 1) {
+      res.json(updatedMountain[1][0]);
     } else {
-      res.status(404).json({
-        status: "Not Found",
-        message: "Mountain not found",
-        response: null,
-      });
+      res.status(404).json({ error: "Mountain not found" });
     }
   } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Internal Server Error",
-      response: null,
-    });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.delete("/:mountain_id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const deletedMountain = await Mountains.findByIdAndDelete(
-      req.params.mountain_id
-    );
-    if (deletedMountain) {
-      res.status(200).json({
-        status: "OK",
-        message: "Mountain deleted",
-        response: deletedMountain,
-      });
+    const deletedMountain = await Mountains.destroy({
+      where: { mountain_id: id },
+    });
+    if (deletedMountain === 1) {
+      res.json({ message: "Mountain deleted successfully" });
     } else {
-      res.status(404).json({
-        status: "Not Found",
-        message: "Mountain not found",
-        response: null,
-      });
+      res.status(404).json({ error: "Mountain not found" });
     }
   } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Internal Server Error",
-      response: null,
-    });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
