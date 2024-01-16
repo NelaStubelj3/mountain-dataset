@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const axios = require("axios");
 const passport = require("passport");
@@ -22,19 +23,19 @@ router.get("/callback", (req, res, next) => {
       console.log("Callback route executed");
 
       const { code } = req.query;
-
+      console.log("Received authorization code:", code);
       try {
         const auth0Response = await axios.post(
           `https://dev-sxqf1j7cxxvi2xk0.us.auth0.com/oauth/token`,
-          {
+          new URLSearchParams({
             grant_type: "authorization_code",
-            client_id: "hPT6AQ4XryAbMAsSlyh5QPyyJy9zq8EI",
-            client_secret:
-              "lP3RcPlhWxNn4zos3aWdMGI65T0j0Ru2F9As81KssTxXLZP_nLWOOL96CM1qkNyr",
-            code,
-            redirect_uri: "http://127.0.0.1:5500/client/src/datatable.html",
-          }
+            client_id: process.env.AUTH0_CLIENT_ID,
+            client_secret: process.env.AUTH0_CLIENT_SECRET,
+            code:code,
+            redirect_uri: process.env.AUTH0_REDIRECT_URI,
+          })
         );
+        console.log("Auth0 token exchange response:", auth0Response);
 
         const accessToken = auth0Response.data.access_token;
 
@@ -44,16 +45,17 @@ router.get("/callback", (req, res, next) => {
           "http://localhost:3001/api/auth/profile"
         );
 
-        const user = userResponse.data;
-        console.log(user);
+        const { user, roles, permissions } = userResponse.data;
+        console.log(user, roles, permissions);
 
-        const redirectURL = `http://127.0.0.1:5500/client/src/datatable.html?user=${encodeURIComponent(
-          JSON.stringify(user)
-        )}`;
-        res.redirect(redirectURL);
+        if (roles.includes('admin')) {
+          res.redirect('http://localhost:3000/profile');
+        } else {
+          res.redirect('http://localhost:3000/client/src/datatable.html');
+        }
       } catch (error) {
         console.error("Error fetching user information:", error);
-        res.redirect("/"); // Redirect to home on error
+        res.redirect("/");
       }
     });
   })(req, res, next);
@@ -64,17 +66,17 @@ router.get(
   passport.authenticate("auth0", { scope: "openid email profile" })
 );
 
-// Profile route
 router.get("/profile", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/");
   }
 
-  // User is authenticated, show profile
-  res.json(req.user);
-});
+  res.json({
+    user: req.user,
+    roles: ['admin'], 
+    permissions: ['read:userinfo'], 
+  });});
 
-// Logout route
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
